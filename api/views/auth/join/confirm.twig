@@ -1,0 +1,9 @@
+{% extends 'layouts/mail.twig' %}
+
+{% block body %}
+  <p style="margin: 0 0 1rem 0">Confirm your email</p>
+  <p style="margin: 0 0 1rem 0">
+    Your token: {{ token }}
+    Confirmed: <a href="#">{{ url }}</a>
+  </p>
+{% endblock %}

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="3"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config ./vendor/vimeo/psalm/config.xsd"
+    cacheDirectory="./var/cache"
+>
+    <projectFiles>
+        <directory name="./config" />
+        <directory name="./src" />
+        <ignoreFiles>
+            <directory name="./vendor" />
+            <directory name="./var" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+      <LessSpecificReturnType errorLevel="info"/>
+    </issueHandlers>
+</psalm>

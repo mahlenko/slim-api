@@ -1,0 +1,80 @@
+version: "3.9"
+services:
+  frontend:
+    build:
+      context: frontend/docker/development
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - frontend-node
+
+  frontend-node:
+    build:
+      context: frontend/docker/node
+      dockerfile: Dockerfile
+    command: sh -c "until [ -f .ready ]; do sleep 1; done && yarn start"
+    volumes:
+      - ./frontend:/app
+    tty: true
+
+  frontend-node-cli:
+    build:
+      context: frontend/docker/node
+      dockerfile: Dockerfile
+    volumes:
+    - ./frontend:/app
+
+  api:
+    build:
+      context: docker
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "8001:80"
+      - "8025:8025"
+    volumes:
+      - ./api:/app
+    depends_on:
+      - php-fpm
+      - mailer
+
+  php-fpm:
+    build:
+      context: docker
+      dockerfile: php-fpm/Dockerfile
+    volumes:
+      - ./api:/app
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: 1
+      DB_HOST: db
+
+  php-cli:
+    build:
+      context: docker
+      dockerfile: php-cli/Dockerfile
+    volumes:
+      - ./api:/app
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: 1
+      DB_HOST: db
+
+  db:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - api-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: developer
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: developer
+
+  mailer:
+    image: mailhog/mailhog
+
+volumes:
+  api-postgres:

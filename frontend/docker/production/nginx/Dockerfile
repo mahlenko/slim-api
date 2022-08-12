@@ -1,0 +1,12 @@
+FROM node:13-alpine as builder
+WORKDIR /app
+COPY ./package.json ./yarn.lock ./
+RUN yarn install
+COPY ./ ./
+RUN yarn build
+
+FROM nginx:1.19-alpine
+COPY ./common/nginx/conf.d /etc/nginx/conf.d
+
+WORKDIR /app
+COPY --from=builder ./app/build ./public

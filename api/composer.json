@@ -1,0 +1,50 @@
+{
+    "name": "developer/crm",
+    "authors": [
+        {
+            "name": "Sergey Makhlenko",
+            "email": "mahlenko-weblive@yandex.ru"
+        }
+    ],
+    "license": "",
+    "require": {
+        "php": "^8.0",
+        "doctrine/migrations": "^3.0",
+        "doctrine/orm": "^2.9",
+        "giggsey/libphonenumber-for-php": "^8.12",
+        "laminas/laminas-config": "^3.4",
+        "laminas/laminas-config-aggregator": "^1.4",
+        "monolog/monolog": "^2.1",
+        "php-di/slim-bridge": "^3.0",
+        "ramsey/uuid": "^4.1",
+        "slim/psr7": "^1.2",
+        "slim/slim": "^4.9",
+        "symfony/console": "^5.1",
+        "symfony/mailer": "^5.3",
+        "twig/twig": "^3.0",
+        "webmozart/assert": "^1.9"
+    },
+    "require-dev": {
+        "doctrine/data-fixtures": "^1.4",
+        "filp/whoops": "^2.14",
+        "phpunit/phpunit": "^9.4",
+        "squizlabs/php_codesniffer": "*",
+        "symfony/var-dumper": "^5.1",
+        "vimeo/psalm": "^4.3"
+    },
+    "autoload": {
+        "psr-4": {
+          "App\\": "src"
+        }
+    },
+    "scripts": {
+        "test": "phpunit --colors=always",
+        "psalm": "psalm --show-info=true --php-version=8.0",
+        "phpcs": "./vendor/bin/phpcs",
+        "test-coverage": "phpunit --colors=always --coverage-html storage/system/temp/coverage"
+    },
+    "config": {
+        "process-timeout": 0,
+        "sort-packages": true
+    }
+}
